@@ -444,18 +444,21 @@ fun Context.getUriMimeType(path: String, newUri: Uri): String {
     return mimeType
 }
 
-fun Context.isThankYouInstalled() = isPackageInstalled("com.simplemobiletools.thankyou")
+fun Context.isThankYouInstalled(): Boolean {
+    return true
+}
 
 fun Context.isOrWasThankYouInstalled(): Boolean {
-    return when {
-        resources.getBoolean(R.bool.pretend_thank_you_installed) -> true
-        baseConfig.hadThankYouInstalled -> true
-        isThankYouInstalled() -> {
-            baseConfig.hadThankYouInstalled = true
-            true
-        }
-        else -> false
-    }
+    return true
+//    return when {
+//        resources.getBoolean(R.bool.pretend_thank_you_installed) -> true
+//        baseConfig.hadThankYouInstalled -> true
+//        isThankYouInstalled() -> {
+//            baseConfig.hadThankYouInstalled = true
+//            true
+//        }
+//        else -> false
+//    }
 }
 
 fun Context.isAProApp() = packageName.startsWith("com.simplemobiletools.") && packageName.removeSuffix(".debug").endsWith(".pro")

@@ -20,11 +20,30 @@ fun Context.getProperTextColor() = if (baseConfig.isUsingSystemTheme) {
     baseConfig.textColor
 }
 
+fun mixColors(color1: Int, color2: Int, ratio: Double): Int {
+    val inverseRatio = 1 - ratio
+
+    val r1 = Color.red(color1)
+    val g1 = Color.green(color1)
+    val b1 = Color.blue(color1)
+
+    val r2 = Color.red(color2)
+    val g2 = Color.green(color2)
+    val b2 = Color.blue(color2)
+
+    val mixed_r = (r1 * ratio + r2 * inverseRatio).toInt()
+    val mixed_g = (g1 * ratio + g2 * inverseRatio).toInt()
+    val mixed_b = (b1 * ratio + b2 * inverseRatio).toInt()
+    return Color.rgb(mixed_r, mixed_g, mixed_b)
+}
+
 fun Context.getProperBackgroundColor() = if (baseConfig.isUsingSystemTheme) {
     resources.getColor(R.color.you_background_color, theme)
 } else {
     baseConfig.backgroundColor
 }
+
+fun Context.getSecondaryBackgroundColor() = mixColors(getProperBackgroundColor(), 0x888888, 0.9)
 
 fun Context.getProperPrimaryColor() = when {
     baseConfig.isUsingSystemTheme -> resources.getColor(R.color.you_primary_color, theme)

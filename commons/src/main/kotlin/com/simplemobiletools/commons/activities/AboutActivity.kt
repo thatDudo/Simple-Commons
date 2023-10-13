@@ -231,17 +231,6 @@ class AboutActivity : BaseSimpleActivity() {
         }
     }
 
-    private fun setupContributors() {
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_face_vector, R.string.contributors)
-            about_help_us_layout.addView(this)
-
-            setOnClickListener {
-                val intent = Intent(applicationContext, ContributorsActivity::class.java)
-                startActivity(intent)
-            }
-        }
-    }
 
     private fun setupDonate() {
         if (resources.getBoolean(R.bool.show_donate_in_about) && !resources.getBoolean(R.bool.hide_all_external_links)) {
@@ -256,29 +245,6 @@ class AboutActivity : BaseSimpleActivity() {
         }
     }
 
-    private fun setupFacebook() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            about_item_icon.setImageResource(R.drawable.ic_facebook_vector)
-            about_item_label.setText(R.string.facebook)
-            about_item_label.setTextColor(textColor)
-            about_social_layout.addView(this)
-
-            setOnClickListener {
-                var link = "https://www.facebook.com/simplemobiletools"
-                try {
-                    packageManager.getPackageInfo("com.facebook.katana", 0)
-                    link = "fb://page/150270895341774"
-                } catch (ignored: Exception) {
-                }
-
-                launchViewIntent(link)
-            }
-        }
-    }
 
     private fun setupGitHub() {
         if (resources.getBoolean(R.bool.hide_all_external_links)) {
@@ -292,7 +258,7 @@ class AboutActivity : BaseSimpleActivity() {
             about_social_layout.addView(this)
 
             setOnClickListener {
-                launchViewIntent("https://github.com/SimpleMobileTools")
+                launchViewIntent("https://github.com/Dinico414")
             }
         }
     }
@@ -309,44 +275,7 @@ class AboutActivity : BaseSimpleActivity() {
             about_social_layout.addView(this)
 
             setOnClickListener {
-                launchViewIntent("https://www.reddit.com/r/SimpleMobileTools")
-            }
-        }
-    }
-
-    private fun setupTelegram() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            if (about_social_layout.isEmpty()) {
-                about_social.beGone()
-                about_social_divider.beGone()
-            }
-
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            about_item_icon.setImageResource(R.drawable.ic_telegram_vector)
-            about_item_label.setText(R.string.telegram)
-            about_item_label.setTextColor(textColor)
-            about_social_layout.addView(this)
-
-            setOnClickListener {
-                launchViewIntent("https://t.me/SimpleMobileTools")
-            }
-        }
-    }
-
-    private fun setupMoreApps() {
-        if (resources.getBoolean(R.bool.hide_google_relations)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_heart_vector, R.string.more_apps_from_us)
-            about_other_layout.addView(this)
-
-            setOnClickListener {
-                launchMoreAppsFromUsIntent()
+                launchViewIntent("https://www.reddit.com/r/DinicoNights")
             }
         }
     }

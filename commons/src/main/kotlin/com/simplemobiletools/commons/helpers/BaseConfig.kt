@@ -549,4 +549,5 @@ open class BaseConfig(val context: Context) {
     var isCustomOrderSelected: Boolean
         get() = prefs.getBoolean(FAVORITES_CUSTOM_ORDER_SELECTED, false)
         set(selected) = prefs.edit().putBoolean(FAVORITES_CUSTOM_ORDER_SELECTED, selected).apply()
+
 }

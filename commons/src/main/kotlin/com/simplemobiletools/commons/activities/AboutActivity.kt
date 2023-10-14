@@ -3,138 +3,193 @@ package com.simplemobiletools.commons.activities
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.Intent.*
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
+import android.os.Looper
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
-import androidx.core.view.isEmpty
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedDialog
-import com.simplemobiletools.commons.dialogs.RateStarsDialog
+import com.simplemobiletools.commons.compose.alert_dialog.rememberAlertDialogState
+import com.simplemobiletools.commons.compose.extensions.enableEdgeToEdgeSimple
+import com.simplemobiletools.commons.compose.extensions.rateStarsRedirectAndThankYou
+import com.simplemobiletools.commons.compose.screens.*
+import com.simplemobiletools.commons.compose.theme.AppThemeSurface
+import com.simplemobiletools.commons.dialogs.ConfirmationAdvancedAlertDialog
+import com.simplemobiletools.commons.dialogs.RateStarsAlertDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.FAQItem
-import kotlinx.android.synthetic.main.activity_about.*
-import kotlinx.android.synthetic.main.item_about.view.*
 
-class AboutActivity : BaseSimpleActivity() {
-    private var appName = ""
-    private var primaryColor = 0
-    private var textColor = 0
-    private var backgroundColor = 0
-    private var inflater: LayoutInflater? = null
+class AboutActivity : ComponentActivity() {
+    private val appName get() = intent.getStringExtra(APP_NAME) ?: ""
 
     private var firstVersionClickTS = 0L
     private var clicksSinceFirstClick = 0
-    private val EASTER_EGG_TIME_LIMIT = 3000L
-    private val EASTER_EGG_REQUIRED_CLICKS = 7
 
-    override fun getAppIconIDs() = intent.getIntegerArrayListExtra(APP_ICON_IDS) ?: ArrayList()
-
-    override fun getAppLauncherName() = intent.getStringExtra(APP_LAUNCHER_NAME) ?: ""
+    companion object {
+        private const val EASTER_EGG_TIME_LIMIT = 3000L
+        private const val EASTER_EGG_REQUIRED_CLICKS = 7
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isMaterialActivity = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
-
-        primaryColor = getProperPrimaryColor()
-        textColor = getProperTextColor()
-        backgroundColor = getProperBackgroundColor()
-        inflater = LayoutInflater.from(this)
-
-        updateMaterialActivityViews(about_coordinator, about_holder, useTransparentNavigation = true, useTopSearchMenu = false)
-        setupMaterialScrollListener(about_nested_scrollview, about_toolbar)
-
-        appName = intent.getStringExtra(APP_NAME) ?: ""
-
-        arrayOf(about_support, about_help_us, about_social, about_other).forEach {
-            it.setTextColor(primaryColor)
+        enableEdgeToEdgeSimple()
+        setContent {
+            val context = LocalContext.current
+            val resources = context.resources
+            AppThemeSurface {
+                val showExternalLinks = remember { !resources.getBoolean(R.bool.hide_all_external_links) }
+                val showGoogleRelations = remember { !resources.getBoolean(R.bool.hide_google_relations) }
+                val onEmailClickAlertDialogState = getOnEmailClickAlertDialogState()
+                val rateStarsAlertDialogState = getRateStarsAlertDialogState()
+                val onRateUsClickAlertDialogState = getOnRateUsClickAlertDialogState(rateStarsAlertDialogState::show)
+                AboutScreen(
+                    goBack = ::finish,
+                    helpUsSection = {
+                        val showHelpUsSection =
+                            remember { showGoogleRelations || !showExternalLinks }
+                        HelpUsSection(
+                            onRateUsClick = {
+                                onRateUsClick(
+                                    showConfirmationAdvancedDialog = onRateUsClickAlertDialogState::show,
+                                    showRateStarsDialog = rateStarsAlertDialogState::show
+                                )
+                            },
+                            onInviteClick = ::onInviteClick,
+                            onContributorsClick = ::onContributorsClick,
+                            showDonate = resources.getBoolean(R.bool.show_donate_in_about) && showExternalLinks,
+                            onDonateClick = ::onDonateClick,
+                            showInvite = showHelpUsSection,
+                            showRateUs = showHelpUsSection
+                        )
+                    },
+                    aboutSection = {
+                        val setupFAQ = rememberFAQ()
+                        if (!showExternalLinks || setupFAQ) {
+                            AboutSection(setupFAQ = setupFAQ, onFAQClick = ::launchFAQActivity, onEmailClick = {
+                                onEmailClick(onEmailClickAlertDialogState::show)
+                            })
+                        }
+                    },
+                    socialSection = {
+                        if (showExternalLinks) {
+                            SocialSection(
+                                onFacebookClick = ::onFacebookClick,
+                                onGithubClick = ::onGithubClick,
+                                onRedditClick = ::onRedditClick,
+                                onTelegramClick = ::onTelegramClick
+                            )
+                        }
+                    }
+                ) {
+                    val (showWebsite, fullVersion) = showWebsiteAndFullVersion(resources, showExternalLinks)
+                    OtherSection(
+                        showMoreApps = showGoogleRelations,
+                        onMoreAppsClick = ::launchMoreAppsFromUsIntent,
+                        showWebsite = showWebsite,
+                        onWebsiteClick = ::onWebsiteClick,
+                        showPrivacyPolicy = showExternalLinks,
+                        onPrivacyPolicyClick = ::onPrivacyPolicyClick,
+                        onLicenseClick = ::onLicenseClick,
+                        version = fullVersion,
+                        onVersionClick = ::onVersionClick
+                    )
+                }
+            }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateTextColors(about_nested_scrollview)
-        setupToolbar(about_toolbar, NavigationIcon.Arrow)
+    @Composable
+    private fun rememberFAQ() = remember { !(intent.getSerializableExtra(APP_FAQ) as? ArrayList<FAQItem>).isNullOrEmpty() }
 
-        about_support_layout.removeAllViews()
-        about_help_us_layout.removeAllViews()
-        about_social_layout.removeAllViews()
-        about_other_layout.removeAllViews()
-
-//        setupFAQ()
-//        setupEmail()
-//        setupRateUs()
-//        setupInvite()
-//        setupContributors()
-//        setupDonate()
-//        setupFacebook()
-//        setupGitHub()
-//        setupReddit()
-//        setupTelegram()
-//        setupMoreApps()
-//        setupWebsite()
-//        setupPrivacyPolicy()
-        setupLicense()
-        setupVersion()
+    @Composable
+    private fun showWebsiteAndFullVersion(
+        resources: Resources,
+        showExternalLinks: Boolean
+    ): Pair<Boolean, String> {
+        val showWebsite = remember { resources.getBoolean(R.bool.show_donate_in_about) && !showExternalLinks }
+        var version = intent.getStringExtra(APP_VERSION_NAME) ?: ""
+        if (baseConfig.appId.removeSuffix(".debug").endsWith(".pro")) {
+            version += " ${getString(R.string.pro)}"
+        }
+        val fullVersion = remember { String.format(getString(R.string.version_placeholder, version)) }
+        return Pair(showWebsite, fullVersion)
     }
 
-    private fun setupFAQ() {
-        val faqItems = intent.getSerializableExtra(APP_FAQ) as ArrayList<FAQItem>
-        if (faqItems.isNotEmpty()) {
-            inflater?.inflate(R.layout.item_about, null)?.apply {
-                setupAboutItem(this, R.drawable.ic_question_mark_vector, R.string.frequently_asked_questions)
-                about_support_layout.addView(this)
-
-                setOnClickListener {
-                    launchFAQActivity()
-                }
+    @Composable
+    private fun getRateStarsAlertDialogState() =
+        rememberAlertDialogState().apply {
+            DialogMember {
+                RateStarsAlertDialog(alertDialogState = this, onRating = ::rateStarsRedirectAndThankYou)
             }
+        }
+
+    @Composable
+    private fun getOnEmailClickAlertDialogState() =
+        rememberAlertDialogState().apply {
+            DialogMember {
+                ConfirmationAdvancedAlertDialog(
+                    alertDialogState = this,
+                    callback = { success ->
+                        if (success) {
+                            launchFAQActivity()
+                        } else {
+                            launchEmailIntent()
+                        }
+                    },
+                    message = "${getString(R.string.before_asking_question_read_faq)}\n\n${getString(R.string.make_sure_latest)}",
+                    messageId = null,
+                    positive = R.string.read_faq,
+                    negative = R.string.skip
+                )
+            }
+        }
+
+    @Composable
+    private fun getOnRateUsClickAlertDialogState(showRateStarsDialog: () -> Unit) =
+        rememberAlertDialogState().apply {
+            DialogMember {
+                ConfirmationAdvancedAlertDialog(
+                    alertDialogState = this,
+                    callback = { success ->
+                        if (success) {
+                            launchFAQActivity()
+                        } else {
+                            launchRateUsPrompt(showRateStarsDialog)
+                        }
+                    },
+                    message = "${getString(R.string.before_asking_question_read_faq)}\n\n${getString(R.string.make_sure_latest)}",
+                    messageId = null,
+                    positive = R.string.read_faq,
+                    negative = R.string.skip
+                )
+            }
+        }
+
+    private fun onEmailClick(
+        showConfirmationAdvancedDialog: () -> Unit
+    ) {
+        if (intent.getBooleanExtra(SHOW_FAQ_BEFORE_MAIL, false) && !baseConfig.wasBeforeAskingShown) {
+            baseConfig.wasBeforeAskingShown = true
+            showConfirmationAdvancedDialog()
+        } else {
+            launchEmailIntent()
         }
     }
 
     private fun launchFAQActivity() {
         val faqItems = intent.getSerializableExtra(APP_FAQ) as ArrayList<FAQItem>
         Intent(applicationContext, FAQActivity::class.java).apply {
-            putExtra(APP_ICON_IDS, getAppIconIDs())
-            putExtra(APP_LAUNCHER_NAME, getAppLauncherName())
+            putExtra(APP_ICON_IDS, intent.getIntegerArrayListExtra(APP_ICON_IDS) ?: ArrayList<String>())
+            putExtra(APP_LAUNCHER_NAME, intent.getStringExtra(APP_LAUNCHER_NAME) ?: "")
             putExtra(APP_FAQ, faqItems)
             startActivity(this)
-        }
-    }
-
-    private fun setupEmail() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            if (about_support_layout.isEmpty()) {
-                about_support.beGone()
-                about_support_divider.beGone()
-            }
-
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_mail_vector, R.string.my_email)
-            about_support_layout.addView(this)
-
-            setOnClickListener {
-                val msg = "${getString(R.string.before_asking_question_read_faq)}\n\n${getString(R.string.make_sure_latest)}"
-                if (intent.getBooleanExtra(SHOW_FAQ_BEFORE_MAIL, false) && !baseConfig.wasBeforeAskingShown) {
-                    baseConfig.wasBeforeAskingShown = true
-                    ConfirmationAdvancedDialog(this@AboutActivity, msg, 0, R.string.read_faq, R.string.skip) { success ->
-                        if (success) {
-                            launchFAQActivity()
-                        } else {
-                            launchEmailIntent()
-                        }
-                    }
-                } else {
-                    launchEmailIntent()
-                }
-            }
         }
     }
 
@@ -174,268 +229,107 @@ class AboutActivity : BaseSimpleActivity() {
         }
     }
 
-    private fun setupRateUs() {
-        if (resources.getBoolean(R.bool.hide_google_relations) || resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_star_vector, R.string.rate_us)
-            about_help_us_layout.addView(this)
-
-            setOnClickListener {
-                if (baseConfig.wasBeforeRateShown) {
-                    launchRateUsPrompt()
-                } else {
-                    baseConfig.wasBeforeRateShown = true
-                    val msg = "${getString(R.string.before_rate_read_faq)}\n\n${getString(R.string.make_sure_latest)}"
-                    ConfirmationAdvancedDialog(this@AboutActivity, msg, 0, R.string.read_faq, R.string.skip) { success ->
-                        if (success) {
-                            launchFAQActivity()
-                        } else {
-                            launchRateUsPrompt()
-                        }
-                    }
-                }
-            }
+    private fun onRateUsClick(
+        showConfirmationAdvancedDialog: () -> Unit,
+        showRateStarsDialog: () -> Unit
+    ) {
+        if (baseConfig.wasBeforeRateShown) {
+            launchRateUsPrompt(showRateStarsDialog)
+        } else {
+            baseConfig.wasBeforeRateShown = true
+            showConfirmationAdvancedDialog()
         }
     }
 
-    private fun launchRateUsPrompt() {
+    private fun launchRateUsPrompt(
+        showRateStarsDialog: () -> Unit
+    ) {
         if (baseConfig.wasAppRated) {
             redirectToRateUs()
         } else {
-            RateStarsDialog(this@AboutActivity)
+            showRateStarsDialog()
         }
     }
 
-    private fun setupInvite() {
-        if (resources.getBoolean(R.bool.hide_google_relations) || resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_add_person_vector, R.string.invite_friends)
-            about_help_us_layout.addView(this)
-
-            setOnClickListener {
-                val text = String.format(getString(R.string.share_text), appName, getStoreUrl())
-                Intent().apply {
-                    action = ACTION_SEND
-                    putExtra(EXTRA_SUBJECT, appName)
-                    putExtra(EXTRA_TEXT, text)
-                    type = "text/plain"
-                    startActivity(createChooser(this, getString(R.string.invite_via)))
-                }
-            }
+    private fun onInviteClick() {
+        val text = String.format(getString(R.string.share_text), appName, getStoreUrl())
+        Intent().apply {
+            action = ACTION_SEND
+            putExtra(EXTRA_SUBJECT, appName)
+            putExtra(EXTRA_TEXT, text)
+            type = "text/plain"
+            startActivity(createChooser(this, getString(R.string.invite_via)))
         }
     }
 
-    private fun setupContributors() {
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_face_vector, R.string.contributors)
-            about_help_us_layout.addView(this)
+    private fun onContributorsClick() {
+        val intent = Intent(applicationContext, ContributorsActivity::class.java)
+        startActivity(intent)
+    }
 
-            setOnClickListener {
-                val intent = Intent(applicationContext, ContributorsActivity::class.java)
-                startActivity(intent)
-            }
+
+    private fun onDonateClick() {
+        launchViewIntent(getString(R.string.donate_url))
+    }
+
+    private fun onFacebookClick() {
+        var link = "https://www.facebook.com/simplemobiletools"
+        try {
+            packageManager.getPackageInfo("com.facebook.katana", 0)
+            link = "fb://page/150270895341774"
+        } catch (ignored: Exception) {
+        }
+
+        launchViewIntent(link)
+    }
+
+    private fun onGithubClick() {
+        launchViewIntent("https://github.com/SimpleMobileTools")
+    }
+
+    private fun onRedditClick() {
+        launchViewIntent("https://www.reddit.com/r/SimpleMobileTools")
+    }
+
+
+    private fun onTelegramClick() {
+        launchViewIntent("https://t.me/SimpleMobileTools")
+    }
+
+
+    private fun onWebsiteClick() {
+        launchViewIntent("https://simplemobiletools.com/")
+    }
+
+    private fun onPrivacyPolicyClick() {
+        val appId = baseConfig.appId.removeSuffix(".debug").removeSuffix(".pro").removePrefix("com.simplemobiletools.")
+        val url = "https://simplemobiletools.com/privacy/$appId.txt"
+        launchViewIntent(url)
+    }
+
+    private fun onLicenseClick() {
+        Intent(applicationContext, LicenseActivity::class.java).apply {
+            putExtra(APP_ICON_IDS, intent.getIntegerArrayListExtra(APP_ICON_IDS) ?: ArrayList<String>())
+            putExtra(APP_LAUNCHER_NAME, intent.getStringExtra(APP_LAUNCHER_NAME) ?: "")
+            putExtra(APP_LICENSES, intent.getLongExtra(APP_LICENSES, 0))
+            startActivity(this)
         }
     }
 
-    private fun setupDonate() {
-        if (resources.getBoolean(R.bool.show_donate_in_about) && !resources.getBoolean(R.bool.hide_all_external_links)) {
-            inflater?.inflate(R.layout.item_about, null)?.apply {
-                setupAboutItem(this, R.drawable.ic_dollar_vector, R.string.donate)
-                about_help_us_layout.addView(this)
-
-                setOnClickListener {
-                    launchViewIntent(getString(R.string.donate_url))
-                }
-            }
-        }
-    }
-
-    private fun setupFacebook() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
+    private fun onVersionClick() {
+        if (firstVersionClickTS == 0L) {
+            firstVersionClickTS = System.currentTimeMillis()
+            Handler(Looper.getMainLooper()).postDelayed({
+                firstVersionClickTS = 0L
+                clicksSinceFirstClick = 0
+            }, EASTER_EGG_TIME_LIMIT)
         }
 
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            about_item_icon.setImageResource(R.drawable.ic_facebook_vector)
-            about_item_label.setText(R.string.facebook)
-            about_item_label.setTextColor(textColor)
-            about_social_layout.addView(this)
-
-            setOnClickListener {
-                var link = "https://www.facebook.com/simplemobiletools"
-                try {
-                    packageManager.getPackageInfo("com.facebook.katana", 0)
-                    link = "fb://page/150270895341774"
-                } catch (ignored: Exception) {
-                }
-
-                launchViewIntent(link)
-            }
-        }
-    }
-
-    private fun setupGitHub() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            about_item_icon.setImageDrawable(resources.getColoredDrawableWithColor(R.drawable.ic_github_vector, backgroundColor.getContrastColor()))
-            about_item_label.setText(R.string.github)
-            about_item_label.setTextColor(textColor)
-            about_social_layout.addView(this)
-
-            setOnClickListener {
-                launchViewIntent("https://github.com/SimpleMobileTools")
-            }
-        }
-    }
-
-    private fun setupReddit() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            about_item_icon.setImageResource(R.drawable.ic_reddit_vector)
-            about_item_label.setText(R.string.reddit)
-            about_item_label.setTextColor(textColor)
-            about_social_layout.addView(this)
-
-            setOnClickListener {
-                launchViewIntent("https://www.reddit.com/r/SimpleMobileTools")
-            }
-        }
-    }
-
-    private fun setupTelegram() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            if (about_social_layout.isEmpty()) {
-                about_social.beGone()
-                about_social_divider.beGone()
-            }
-
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            about_item_icon.setImageResource(R.drawable.ic_telegram_vector)
-            about_item_label.setText(R.string.telegram)
-            about_item_label.setTextColor(textColor)
-            about_social_layout.addView(this)
-
-            setOnClickListener {
-                launchViewIntent("https://t.me/SimpleMobileTools")
-            }
-        }
-    }
-
-    private fun setupMoreApps() {
-        if (resources.getBoolean(R.bool.hide_google_relations)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_heart_vector, R.string.more_apps_from_us)
-            about_other_layout.addView(this)
-
-            setOnClickListener {
-                launchMoreAppsFromUsIntent()
-            }
-        }
-    }
-
-    private fun setupWebsite() {
-        if (!resources.getBoolean(R.bool.show_donate_in_about) || resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_link_vector, R.string.website)
-            about_other_layout.addView(this)
-
-            setOnClickListener {
-                launchViewIntent("https://simplemobiletools.com/")
-            }
-        }
-    }
-
-    private fun setupPrivacyPolicy() {
-        if (resources.getBoolean(R.bool.hide_all_external_links)) {
-            return
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_unhide_vector, R.string.privacy_policy)
-            about_other_layout.addView(this)
-
-            setOnClickListener {
-                val appId = baseConfig.appId.removeSuffix(".debug").removeSuffix(".pro").removePrefix("com.simplemobiletools.")
-                val url = "https://simplemobiletools.com/privacy/$appId.txt"
-                launchViewIntent(url)
-            }
-        }
-    }
-
-    private fun setupLicense() {
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            setupAboutItem(this, R.drawable.ic_article_vector, R.string.third_party_licences)
-            about_other_layout.addView(this)
-
-            setOnClickListener {
-                Intent(applicationContext, LicenseActivity::class.java).apply {
-                    putExtra(APP_ICON_IDS, getAppIconIDs())
-                    putExtra(APP_LAUNCHER_NAME, getAppLauncherName())
-                    putExtra(APP_LICENSES, intent.getLongExtra(APP_LICENSES, 0))
-                    startActivity(this)
-                }
-            }
-        }
-    }
-
-    private fun setupVersion() {
-        var version = intent.getStringExtra(APP_VERSION_NAME) ?: ""
-        if (baseConfig.appId.removeSuffix(".debug").endsWith(".pro")) {
-            version += " ${getString(R.string.pro)}"
-        }
-
-        inflater?.inflate(R.layout.item_about, null)?.apply {
-            about_item_icon.setImageDrawable(resources.getColoredDrawableWithColor(R.drawable.ic_info_vector, textColor))
-            val fullVersion = String.format(getString(R.string.version_placeholder, version))
-            about_item_label.text = fullVersion
-            about_item_label.setTextColor(textColor)
-            about_other_layout.addView(this)
-
-            setOnClickListener {
-                if (firstVersionClickTS == 0L) {
-                    firstVersionClickTS = System.currentTimeMillis()
-                    Handler().postDelayed({
-                        firstVersionClickTS = 0L
-                        clicksSinceFirstClick = 0
-                    }, EASTER_EGG_TIME_LIMIT)
-                }
-
-                clicksSinceFirstClick++
-                if (clicksSinceFirstClick >= EASTER_EGG_REQUIRED_CLICKS) {
-                    toast(R.string.hello)
-                    firstVersionClickTS = 0L
-                    clicksSinceFirstClick = 0
-                }
-            }
-        }
-    }
-
-    private fun setupAboutItem(view: View, drawableId: Int, textId: Int) {
-        view.apply {
-            about_item_icon.setImageDrawable(resources.getColoredDrawableWithColor(drawableId, textColor))
-            about_item_label.setText(textId)
-            about_item_label.setTextColor(textColor)
+        clicksSinceFirstClick++
+        if (clicksSinceFirstClick >= EASTER_EGG_REQUIRED_CLICKS) {
+            toast(R.string.hello)
+            firstVersionClickTS = 0L
+            clicksSinceFirstClick = 0
         }
     }
 }

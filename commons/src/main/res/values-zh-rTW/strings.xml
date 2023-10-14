@@ -77,6 +77,7 @@
     <string name="phone_storage">手機空間</string>
     <string name="phone_storage_hidden">手機空間 (其他程式不可見)</string>
     <string name="audio">Audio</string>
+    <string name="scanning">Scanning…</string>
     <!-- Events -->
     <string name="birthday">生日</string>
     <string name="anniversary">紀念日</string>
@@ -99,6 +100,7 @@
     <string name="increase_column_count">增加欄數</string>
     <string name="reduce_column_count">減少欄數</string>
     <string name="column_count">Column count</string>
+    <string name="row_count">Row count</string>
     <string name="portrait_column_count">Portrait column count</string>
     <string name="landscape_column_count">Landscape column count</string>
     <string name="change_cover_image">更換封面圖片</string>
@@ -106,6 +108,10 @@
     <plurals name="column_counts">
         <item quantity="one">%d column</item>
         <item quantity="other">%d columns</item>
+    </plurals>
+    <plurals name="row_counts">
+        <item quantity="one">%d row</item>
+        <item quantity="other">%d rows</item>
     </plurals>
     <!-- Blocked numbers -->
     <string name="manage_blocked_numbers">管理黑名單</string>
@@ -125,6 +131,12 @@
     <string name="block_hidden_messages">Block messages from hidden numbers</string>
     <string name="add_blocked_number_helper_text">Enter a number or a pattern (e.g. *12345*, +1*8888) to block all calls and messages from numbers matching the pattern.</string>
     <string name="must_make_default_caller_id_app">Can\'t block unknown numbers without caller ID permission.</string>
+    <string name="block_contact">Block contact</string>
+    <string name="block_contact_success">Contact blocked</string>
+    <string name="block_contact_fail">Contact could not be blocked</string>
+    <string name="unblock_contact">Unblock contact</string>
+    <string name="unblock_contact_success">Contact unblocked</string>
+    <string name="unblock_contact_fail">Contact could not be unblocked</string>
     <!-- Favorites -->
     <string name="favorites">我的最愛</string>
     <string name="add_favorites">添加我的最愛</string>
@@ -134,6 +146,7 @@
     <string name="search">搜尋</string>
     <string name="search_in_placeholder">Search in %s</string>
     <string name="type_2_characters">輸入兩個字以上來開始搜尋。</string>
+    <string name="show_search">Show a search bar</string>
     <string name="search_contacts">Search contacts</string>
     <string name="search_favorites">Search favorites</string>
     <string name="search_apps">Search apps</string>
@@ -163,11 +176,16 @@
     <string name="no_audio_permissions">音訊權限是必要的</string>
     <string name="no_permission">No permission</string>
     <string name="allow_notifications_reminders">You must allow the app displaying notifications, else it cannot show reminders.</string>
+    <string name="allow_full_screen_notifications_reminders">You must allow the app displaying full screen notifications, else you may miss some reminders.</string>
     <string name="allow_notifications_files">You must allow the app displaying notifications, else it cannot show the progress bar.</string>
     <string name="allow_notifications_music_player">You must allow the app displaying notifications, else it cannot play songs.</string>
     <string name="allow_notifications_voice_recorder">You must allow the app displaying notifications, else it cannot record audio.</string>
     <string name="allow_notifications_incoming_calls">You must allow the app displaying notifications, else it cannot show incoming calls.</string>
+    <string name="allow_full_screen_notifications_incoming_calls">You must allow the app displaying full screen notifications, else you may miss some incoming calls.</string>
     <string name="allow_notifications_incoming_messages">You must allow the app displaying notifications, else it cannot show incoming messages.</string>
+    <string name="allow_alarm_scheduled_messages">You must allow the app accessing internal alarms, else it cannot send scheduled messages.</string>
+    <string name="allow_alarm_sleep_timer">You must allow the app accessing internal alarms, else it cannot turn off the application after sleep timer.</string>
+    <string name="allow_location_permission">You must allow the app accessing your location, else it won\'t know it.</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="permission_required">Permission Required</string>
     <!-- Renaming -->
@@ -281,6 +299,7 @@
     <string name="select_storage">選擇儲存空間</string>
     <string name="storage">Storage</string>
     <string name="internal">內部儲存空間</string>
+    <string name="internal_storage">Internal Storage</string>
     <string name="sd_card">SD卡</string>
     <string name="root">根目錄</string>
     <string name="wrong_root_selected">選擇了錯誤的資料夾，請選擇SD卡的根目錄</string>
@@ -372,6 +391,7 @@
     <string name="unhide_folder">取消隱藏資料夾</string>
     <string name="temporarily_show_hidden">暫時顯示隱藏的檔案</string>
     <string name="stop_showing_hidden">停止顯示隱藏的檔案</string>
+    <string name="allow_access_more_media">Allow access to more media</string>
     <string name="maximum_share_reached">你不能一次分享這麼多內容</string>
     <string name="empty_and_disable_recycle_bin">清空並停用回收桶</string>
     <string name="undo">復原</string>
@@ -396,6 +416,10 @@
     <string name="contact_details">Contact details</string>
     <string name="add_contact">Add contact</string>
     <string name="wallpapers">Wallpapers</string>
+    <string name="show_line_numbers">Show line numbers</string>
+    <string name="hide_line_numbers">Hide line numbers</string>
+    <string name="sleep_timer">睡眠定時器</string>
+    <string name="unblock">Unblock</string>
     <!-- Sorting -->
     <string name="sort_by">排序</string>
     <string name="name">名稱</string>
@@ -419,6 +443,7 @@
     <string name="full_name">Full name</string>
     <string name="use_custom_sorting">Use custom sorting</string>
     <string name="change_order">Change order</string>
+    <string name="more_options">More options</string>
     <!-- Confirmation dialog -->
     <string name="proceed_with_deletion">確定要進行刪除嗎?</string>
     <string name="deletion_confirmation">你確定要刪除%s嗎?</string>
@@ -441,6 +466,8 @@
     <string name="enter_pin">輸入PIN碼</string>
     <string name="please_enter_pin">請輸入PIN碼</string>
     <string name="wrong_pin">PIN碼錯誤</string>
+    <string name="pin_must_be_4_digits_long">PIN must be at least 4 digits long</string>
+    <string name="too_many_incorrect_attempts">Too many incorrect unlock attempts.\nTry again in %d seconds.</string>
     <string name="repeat_pin">再次輸入PIN碼</string>
     <string name="pattern">圖形</string>
     <string name="insert_pattern">畫出解鎖圖形</string>
@@ -464,6 +491,8 @@
     <string name="lock_folder_notice">這保護僅限作用於此應用程式，並不該用來取代真正系統級的資料夾加密。</string>
     <string name="enter_password">Enter password</string>
     <string name="password">Password</string>
+    <string name="add_password">Add password</string>
+    <string name="empty_password_new">Please enter a password</string>
     <string name="empty_password">Please enter the password</string>
     <string name="invalid_password">Incorrect password</string>
     <!-- Times -->
@@ -651,7 +680,7 @@
     <string name="exclude">排除</string>
     <string name="exclude_folder">Exclude folder</string>
     <string name="excluded_folders">排除資料夾</string>
-    <string name="excluded">(排除)</string>
+    <string name="excluded">(已排除)</string>
     <string name="manage_excluded_folders">管理排除資料夾</string>
     <string name="remove_all">移除全部</string>
     <string name="remove_all_description">是否將排除列表中的所有資料夾都移除？這不會刪除資料夾。</string>
@@ -771,13 +800,39 @@
     <string name="more_info">更多資訊</string>
     <string name="upgrade">升級</string>
     <string name="upgrade_calendar">你必須手動搬移儲存在本機端的活動，透過匯出.ics檔案再接著匯入。你可以在主畫面選單中，找到 匯出/匯入 兩個按鈕。</string>
-    <string name="upgraded_from_free_gallery">Hello,\n\nseems like you just upgraded from the free version. Once you are happy with this one and maybe migrated your settings and favorites over, you can uninstall the old free one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
+    <string name="upgraded_from_free_gallery">您好，
+\n
+\n看起來您剛從免費版升級。一旦您對這個版本感到滿意，並且可能已經遷移了您的設定和收藏，您可以卸載舊的免費版本，以避免意外啟動它，因為您將不再需要它，這也將防止此對話框彈出。
+\n
+\n謝謝！</string>
     <string name="upgraded_to_pro_gallery">Hello,\n\nseems like you already have the Pro app version too. Once you are happy with it and maybe migrated your settings and favorites over, you can uninstall this one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free">Hello,\n\nseems like you just upgraded from the free version. Once you are happy with this one and maybe migrated your data over, you can uninstall the old free one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
+    <string name="upgraded_from_free">您好，
+\n
+\n看起來您剛剛從免費版升級到付費版。一旦您對新版本滿意，並且可能已經將您的數據遷移過來，您就可以卸載舊的免費版，以避免意外啟動它，因為您將不再需要它了，這也將防止此對話框顯示。
+\n
+\n謝謝！</string>
     <string name="upgraded_to_pro">Hello,\n\nseems like you already have the Pro app version too. Once you are happy with it and maybe migrated your data over, you can uninstall this one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free_calendar">Hello,\n\nseems like you just upgraded from the free version. If you want to migrate your locally stored events over, you have to do it manually by exporting them into an .ics file in the free app version and importing here through the top menu. \n\nOnce you are satisfied with your setup in the Pro version, you can uninstall the old free one as you won\'t need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free_contacts">Hello,\n\nseems like you just upgraded from the free version. If you had any contacts stored under \"%s\", you have to migrate them manually by exporting in a .vcf file from the free app version and importing here through the top menu.\n\nOnce you are satisfied with your setup in the Pro version, you can uninstall the old free one as you won\'t need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free_notes">Hello,\n\nseems like you just upgraded from the free version. If you want to migrate your notes over, you have to do it manually by exporting them into a file in the free app version and importing here through the top menu. \n\nOnce you are satisfied with your setup in the Pro version, you can uninstall the old free one as you won\'t need it anymore.\n\nThanks!</string>
+    <string name="upgraded_from_free_calendar">您好，
+\n
+\n看來您剛從免費版本升級上來。如果您想要將本地儲存的活動遷移到新版本，您必須手動將它們從免費的應用版本中導出成 .ics 檔案，然後透過頂部選單導入。
+\n
+\n一旦您對 Pro 版本的設定感到滿意，您可以卸載舊的免費版本，因為您將不再需要它，這也將阻止此對話框的再次出現。
+\n
+\n謝謝！</string>
+    <string name="upgraded_from_free_contacts">您好，
+\n
+\n看來您剛從免費版本升級過來。若您在「%s」之下儲存了任何聯絡人，您需要手動進行遷移，方法是從免費版本的應用程式匯出 .vcf 檔案，然後透過頂部選單在這裡匯入。
+\n
+\n一旦您對於 Pro 版本的設定感到滿意，您就可以卸載舊的免費版本，因為您將不再需要它，這也將阻止此對話框再次出現。
+\n
+\n謝謝！</string>
+    <string name="upgraded_from_free_notes">您好，
+\n
+\n看起來您剛剛由免費版本升級過來。如果您想要將您的筆記遷移過來，您需要手動進行，首先在免費版本的應用程式中將它們匯出成一個檔案，然後透過上方選單匯入到這裡。
+\n
+\n一旦您對 Pro 版本的設定感到滿意，您就可以卸載舊的免費版本，因為您將不再需要它，這也會避免這個對話框再次彈出。
+\n
+\n謝謝！</string>
     <!-- About -->
     <string name="about">關於</string>
     <string name="website">Website</string>

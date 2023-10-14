@@ -17,6 +17,9 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.contacts.*
 import com.simplemobiletools.commons.overloads.times
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.OutputStream
 import java.util.Locale
 
 class ContactsHelper(val context: Context) {
@@ -126,7 +129,7 @@ class ContactsHelper(val context: Context) {
     }
 
     private fun getDeviceContacts(contacts: SparseArray<Contact>, ignoredContactSources: HashSet<String>?, gettingDuplicates: Boolean) {
-        if (!context.hasContactPermissions()) {
+        if (!context.hasPermission(PERMISSION_READ_CONTACTS)) {
             return
         }
 
@@ -510,7 +513,7 @@ class ContactsHelper(val context: Context) {
 
     private fun getContactGroups(storedGroups: ArrayList<Group>, contactId: Int? = null): SparseArray<ArrayList<Group>> {
         val groups = SparseArray<ArrayList<Group>>()
-        if (!context.hasContactPermissions()) {
+        if (!context.hasPermission(PERMISSION_READ_CONTACTS)) {
             return groups
         }
 
@@ -597,7 +600,7 @@ class ContactsHelper(val context: Context) {
 
     private fun getDeviceStoredGroups(): ArrayList<Group> {
         val groups = ArrayList<Group>()
-        if (!context.hasContactPermissions()) {
+        if (!context.hasPermission(PERMISSION_READ_CONTACTS)) {
             return groups
         }
 
@@ -805,7 +808,7 @@ class ContactsHelper(val context: Context) {
 
     fun getDeviceContactSources(): LinkedHashSet<ContactSource> {
         val sources = LinkedHashSet<ContactSource>()
-        if (!context.hasContactPermissions()) {
+        if (!context.hasPermission(PERMISSION_READ_CONTACTS)) {
             return sources
         }
 
@@ -815,16 +818,19 @@ class ContactsHelper(val context: Context) {
         }
 
         val accounts = AccountManager.get(context).accounts
-        accounts.forEach {
-            if (ContentResolver.getIsSyncable(it, AUTHORITY) == 1) {
-                var publicName = it.name
-                if (it.type == TELEGRAM_PACKAGE) {
-                    publicName = context.getString(R.string.telegram)
-                } else if (it.type == VIBER_PACKAGE) {
-                    publicName = context.getString(R.string.viber)
+
+        if (context.hasPermission(PERMISSION_READ_SYNC_SETTINGS)) {
+            accounts.forEach {
+                if (ContentResolver.getIsSyncable(it, AUTHORITY) == 1) {
+                    var publicName = it.name
+                    if (it.type == TELEGRAM_PACKAGE) {
+                        publicName = context.getString(R.string.telegram)
+                    } else if (it.type == VIBER_PACKAGE) {
+                        publicName = context.getString(R.string.viber)
+                    }
+                    val contactSource = ContactSource(it.name, it.type, publicName)
+                    sources.add(contactSource)
                 }
-                val contactSource = ContactSource(it.name, it.type, publicName)
-                sources.add(contactSource)
             }
         }
 
@@ -1553,6 +1559,25 @@ class ContactsHelper(val context: Context) {
                 }
                 callback(duplicates)
             }
+        }
+    }
+
+    fun getContactsToExport(selectedContactSources: Set<String>, callback: (List<Contact>) -> Unit) {
+        getContacts(getAll = true) { receivedContacts ->
+            val contacts = receivedContacts.filter { it.source in selectedContactSources }
+            callback(contacts)
+        }
+    }
+
+    fun exportContacts(contacts: List<Contact>, outputStream: OutputStream): ExportResult {
+        return try {
+            val jsonString = Json.encodeToString(contacts)
+            outputStream.use {
+                it.write(jsonString.toByteArray())
+            }
+            ExportResult.EXPORT_OK
+        } catch (_: Error) {
+            ExportResult.EXPORT_FAIL
         }
     }
 }

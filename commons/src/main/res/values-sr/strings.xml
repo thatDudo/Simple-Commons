@@ -77,6 +77,7 @@
     <string name="phone_storage">Меморија телефона</string>
     <string name="phone_storage_hidden">Складиште телефона (није видљиво другим апликацијама)</string>
     <string name="audio">Audio</string>
+    <string name="scanning">Scanning…</string>
     <!-- Events -->
     <string name="birthday">Рођендан</string>
     <string name="anniversary">Годишњица</string>
@@ -99,13 +100,20 @@
     <string name="increase_column_count">Повећај број колона</string>
     <string name="reduce_column_count">Смањи број колона</string>
     <string name="column_count">Број колона</string>
+    <string name="row_count">Row count</string>
     <string name="portrait_column_count">Портретни број колона</string>
     <string name="landscape_column_count">Пејзажни број колона</string>
     <string name="change_cover_image">Промени насловну слику</string>
     <string name="select_photo">Изабери фотографију</string>
     <plurals name="column_counts">
-        <item quantity="one">%d column</item>
-        <item quantity="other">%d columns</item>
+        <item quantity="one">%d колона</item>
+        <item quantity="few">%d колоне</item>
+        <item quantity="other">%d колона</item>
+    </plurals>
+    <plurals name="row_counts">
+        <item quantity="one">%d ред</item>
+        <item quantity="few">%d реда</item>
+        <item quantity="other">%d редова</item>
     </plurals>
     <!-- Blocked numbers -->
     <string name="manage_blocked_numbers">Управљајте блокираним бројевима</string>
@@ -120,11 +128,17 @@
     <string name="set_as_default">Set as default</string>
     <string name="block_confirmation">Да ли сте сигурни да желите да блокирате \"%s\"\?</string>
     <string name="block_not_stored_calls">Блокирајте позиве из несачуваних контаката</string>
-    <string name="block_hidden_calls">Block calls from hidden numbers</string>
+    <string name="block_hidden_calls">Блокирај позиве са скривених бројева</string>
     <string name="block_not_stored_messages">Блокирајте поруке од несачуваних контаката</string>
-    <string name="block_hidden_messages">Block messages from hidden numbers</string>
+    <string name="block_hidden_messages">Блокирај поруке са скривених бројева</string>
     <string name="add_blocked_number_helper_text">Унесите број или образац (нпр. *12345*, +1*8888) да бисте блокирали све позиве и поруке са бројева који одговарају шаблону.</string>
     <string name="must_make_default_caller_id_app">Не могу блокирати непознате бројеве без дозволе ИД позиваоца.</string>
+    <string name="block_contact">Block contact</string>
+    <string name="block_contact_success">Контакт је блокиран</string>
+    <string name="block_contact_fail">Contact could not be blocked</string>
+    <string name="unblock_contact">Unblock contact</string>
+    <string name="unblock_contact_success">Contact unblocked</string>
+    <string name="unblock_contact_fail">Contact could not be unblocked</string>
     <!-- Favorites -->
     <string name="favorites">Омиљено</string>
     <string name="add_favorites">Додај омиљене</string>
@@ -134,6 +148,7 @@
     <string name="search">Претрага</string>
     <string name="search_in_placeholder">Search in %s</string>
     <string name="type_2_characters">Укуцај најмање 2 карактера да стартујеш претрагу.</string>
+    <string name="show_search">Show a search bar</string>
     <string name="search_contacts">Search contacts</string>
     <string name="search_favorites">Search favorites</string>
     <string name="search_apps">Search apps</string>
@@ -163,11 +178,16 @@
     <string name="no_audio_permissions">Неопходна је дозвола за аудио</string>
     <string name="no_permission">Нема дозволу</string>
     <string name="allow_notifications_reminders">You must allow the app displaying notifications, else it cannot show reminders.</string>
+    <string name="allow_full_screen_notifications_reminders">You must allow the app displaying full screen notifications, else you may miss some reminders.</string>
     <string name="allow_notifications_files">You must allow the app displaying notifications, else it cannot show the progress bar.</string>
     <string name="allow_notifications_music_player">You must allow the app displaying notifications, else it cannot play songs.</string>
     <string name="allow_notifications_voice_recorder">You must allow the app displaying notifications, else it cannot record audio.</string>
     <string name="allow_notifications_incoming_calls">You must allow the app displaying notifications, else it cannot show incoming calls.</string>
+    <string name="allow_full_screen_notifications_incoming_calls">You must allow the app displaying full screen notifications, else you may miss some incoming calls.</string>
     <string name="allow_notifications_incoming_messages">You must allow the app displaying notifications, else it cannot show incoming messages.</string>
+    <string name="allow_alarm_scheduled_messages">You must allow the app accessing internal alarms, else it cannot send scheduled messages.</string>
+    <string name="allow_alarm_sleep_timer">You must allow the app accessing internal alarms, else it cannot turn off the application after sleep timer.</string>
+    <string name="allow_location_permission">You must allow the app accessing your location, else it won\'t know it.</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="permission_required">Permission Required</string>
     <!-- Renaming -->
@@ -295,6 +315,7 @@
     <string name="select_storage">Изабери складиште</string>
     <string name="storage">Складиште</string>
     <string name="internal">Унутрашња</string>
+    <string name="internal_storage">Internal Storage</string>
     <string name="sd_card">СД картица</string>
     <string name="root">Почетно</string>
     <string name="wrong_root_selected">Изабрана је погрешна фасцикла, молим вас изаберите почетну фасциклу на СД картици</string>
@@ -343,7 +364,7 @@
     <string name="discard">Одбаци</string>
     <string name="undo_changes">Поништи измене</string>
     <string name="undo_changes_confirmation">Да ли желите да поништите измене?</string>
-    <string name="cannot_be_undone">This action cannot be undone.</string>
+    <string name="cannot_be_undone">Ова радња се не може опозвати.</string>
     <string name="save_before_closing">Имате несачуване измене. Сачувај пре изласка?</string>
     <string name="apply_to_all_apps">Примени боје на све Simple Apps</string>
     <string name="app_icon_color_warning">УПОЗОРЕЊЕ: Неки покретачи се не зналазе са изменама икона апликација. Ако икона нестане, покрените апликацију преко Гугл плеја или неког виџета, ако су доступни.
@@ -385,6 +406,7 @@
     <string name="unhide_folder">Прикажи фасциклу</string>
     <string name="temporarily_show_hidden">Привремено прикажи скривено</string>
     <string name="stop_showing_hidden">Прекини са приказивањем скривених медија</string>
+    <string name="allow_access_more_media">Allow access to more media</string>
     <string name="maximum_share_reached">Не можете поделити оволико садржаја одједном</string>
     <string name="empty_and_disable_recycle_bin">Испразни и онемогући канту за отпатке</string>
     <string name="undo">Поништи измене</string>
@@ -409,6 +431,10 @@
     <string name="contact_details">Contact details</string>
     <string name="add_contact">Add contact</string>
     <string name="wallpapers">Позадине</string>
+    <string name="show_line_numbers">Show line numbers</string>
+    <string name="hide_line_numbers">Hide line numbers</string>
+    <string name="sleep_timer">Мерач спавања</string>
+    <string name="unblock">Unblock</string>
     <!-- Sorting -->
     <string name="sort_by">Сортирај према</string>
     <string name="name">Име</string>
@@ -432,6 +458,7 @@
     <string name="full_name">Пуно име</string>
     <string name="use_custom_sorting">Користите прилагођено сортирање</string>
     <string name="change_order">Промени редослед</string>
+    <string name="more_options">More options</string>
     <!-- Confirmation dialog -->
     <string name="proceed_with_deletion">Да ли сте сигурни да желите да наставите са брисањем?</string>
     <string name="deletion_confirmation">Да ли сте сигурни да желите обришете %s?</string>
@@ -456,6 +483,8 @@
     <string name="enter_pin">Унесите ПИН</string>
     <string name="please_enter_pin">Молимо вас унесите ПИН</string>
     <string name="wrong_pin">Погрешан ПИН</string>
+    <string name="pin_must_be_4_digits_long">PIN must be at least 4 digits long</string>
+    <string name="too_many_incorrect_attempts">Too many incorrect unlock attempts.\nTry again in %d seconds.</string>
     <string name="repeat_pin">Поновите ПИН</string>
     <string name="pattern">Шаблон</string>
     <string name="insert_pattern">Унесите шаблон</string>
@@ -477,10 +506,12 @@
     <string name="lock_folder_pro">Закључај мапу (Про)</string>
     <string name="unlock_folder">Откључај мапу</string>
     <string name="lock_folder_notice">Ова заштита функционише само у овој апликацији, не би требало да замени право шифровање директоријума у целом систему.</string>
-    <string name="enter_password">Enter password</string>
-    <string name="password">Password</string>
-    <string name="empty_password">Please enter the password</string>
-    <string name="invalid_password">Incorrect password</string>
+    <string name="enter_password">Унесите шифру</string>
+    <string name="password">Шифра</string>
+    <string name="add_password">Додај шифру</string>
+    <string name="empty_password_new">Молимо унесите шифру</string>
+    <string name="empty_password">Молимо унесите шифру</string>
+    <string name="invalid_password">Погрешна шифра</string>
     <!-- Times -->
     <string name="yesterday">Јуче</string>
     <string name="today">Данас</string>
@@ -693,7 +724,7 @@
     <string name="widgets">Виџети</string>
     <string name="use_same_snooze">Увек користи исто време за успављивање</string>
     <string name="snooze_time">Време успављивања</string>
-    <string name="vibrate_on_button_press">Вибрирајте притиснути дугметом</string>
+    <string name="vibrate_on_button_press">Вибрација при притиску на дугме</string>
     <string name="move_items_into_recycle_bin">Премести ставке у канту за отпатке уместо брисања</string>
     <string name="recycle_bin_cleaning_interval">Временски интервал за чишћење канте за отпатке</string>
     <string name="empty_recycle_bin">Испразни канту за смеће</string>
@@ -845,13 +876,39 @@
     <string name="more_info">Више информација</string>
     <string name="upgrade">Унапређивање</string>
     <string name="upgrade_calendar">Морате да преселите локално складиштене догађаје ручно преко извожења у .ics датотеку, а затим да увезете. Можете наћи дугмад за увоз и извоз у главном екрану.</string>
-    <string name="upgraded_from_free_gallery">Hello,\n\nseems like you just upgraded from the free version. Once you are happy with this one and maybe migrated your settings and favorites over, you can uninstall the old free one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
+    <string name="upgraded_from_free_gallery">Здраво,
+\n
+\nизгледа да сте управо надоградили са бесплатне верзије. Када будете задовољни са овим и можда преместите своја подешавања и омиљено, можете да деинсталирате стари бесплатни да бисте избегли да га случајно покренете јер вам више неће требати, а такође ће спречити да се овај дијалог прикаже.
+\n
+\nХвала!</string>
     <string name="upgraded_to_pro_gallery">Hello,\n\nseems like you already have the Pro app version too. Once you are happy with it and maybe migrated your settings and favorites over, you can uninstall this one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free">Hello,\n\nseems like you just upgraded from the free version. Once you are happy with this one and maybe migrated your data over, you can uninstall the old free one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
+    <string name="upgraded_from_free">Здраво,
+\n
+\nизгледа да сте управо надоградили са бесплатне верзије. Када будете задовољни са овим и можда преместите своје податке, можете деинсталирати стари бесплатни да бисте избегли његово случајно покретање јер вам више неће требати, а такође ће спречити да се овај дијалог прикаже.
+\n
+\nХвала!</string>
     <string name="upgraded_to_pro">Hello,\n\nseems like you already have the Pro app version too. Once you are happy with it and maybe migrated your data over, you can uninstall this one to avoid launching it accidentally as you will not need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free_calendar">Hello,\n\nseems like you just upgraded from the free version. If you want to migrate your locally stored events over, you have to do it manually by exporting them into an .ics file in the free app version and importing here through the top menu. \n\nOnce you are satisfied with your setup in the Pro version, you can uninstall the old free one as you won\'t need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free_contacts">Hello,\n\nseems like you just upgraded from the free version. If you had any contacts stored under \"%s\", you have to migrate them manually by exporting in a .vcf file from the free app version and importing here through the top menu.\n\nOnce you are satisfied with your setup in the Pro version, you can uninstall the old free one as you won\'t need it anymore.\n\nThanks!</string>
-    <string name="upgraded_from_free_notes">Hello,\n\nseems like you just upgraded from the free version. If you want to migrate your notes over, you have to do it manually by exporting them into a file in the free app version and importing here through the top menu. \n\nOnce you are satisfied with your setup in the Pro version, you can uninstall the old free one as you won\'t need it anymore.\n\nThanks!</string>
+    <string name="upgraded_from_free_calendar">Здраво,
+\n
+\nизгледа да сте управо надоградили са бесплатне верзије. Ако желите да мигрирате своје локално ускладиштене догађаје, морате то да урадите ручно тако што ћете их извести у .ics фајл у бесплатној верзији апликације и увести овде кроз горњи мени.
+\n
+\nКада будете задовољни својим подешавањем у Про верзији, можете деинсталирати стари бесплатни јер вам више неће требати, а такође ће спречити да се овај дијалог прикаже.
+\n
+\nХвала!</string>
+    <string name="upgraded_from_free_contacts">Здраво,
+\n
+\nизгледа да сте управо надоградили са бесплатне верзије. Ако сте имали било какве контакте сачуване под „%s“, морате да их мигрирате ручно тако што ћете извести у .vcf фајл из бесплатне верзије апликације и увести овде кроз горњи мени.
+\n
+\nКада будете задовољни својим подешавањем у Про верзији, можете деинсталирати стари бесплатни јер вам више неће требати, а такође ће спречити да се овај дијалог прикаже.
+\n
+\nХвала!</string>
+    <string name="upgraded_from_free_notes">Здраво,
+\n
+\nизгледа да сте управо надоградили са бесплатне верзије. Ако желите да мигрирате своје белешке, морате то да урадите ручно тако што ћете их извести у фајл у бесплатној верзији апликације и увести овде кроз горњи мени.
+\n
+\nКада будете задовољни својим подешавањем у Про верзији, можете деинсталирати стари бесплатни јер вам више неће требати, а такође ће спречити да се овај дијалог прикаже.
+\n
+\nХвала!</string>
     <!-- About -->
     <string name="about">О апликацији</string>
     <string name="website">Website</string>
@@ -1114,17 +1171,17 @@
     <string name="sms_mms_title">СМС ММС (СМС и ММС руковање)</string>
     <string name="apng_title">АПНГ Андроид (подршка за анимирани ВебП)</string>
     <string name="pdf_view_pager_title">Андроид ПдфВиевер (ПДФ прегледач)</string>
-    <string name="pdf_viewer_title">Android PdfViewer (PDF Viewer)</string>
+    <string name="pdf_viewer_title">Android PdfViewer (ПДФ прегледач)</string>
     <string name="m3u_parser_title">М3У Парсер (руковање датотекама листе песама м3у)</string>
     <string name="android_lame_title">АндроидЛаме (мп3 кодер)</string>
-    <string name="zip4j_title">Zip4j (ЖИП компресија и декомпресија)</string>
+    <string name="zip4j_title">Zip4j (ЗИП компресија и декомпресија)</string>
     <!-- Trial -->
     <string name="trial_expired">Trial expired</string>
     <string name="start_free_trial">Start free trial</string>
     <string name="trial_expires_soon">Your trial expires soon.</string>
     <string name="unlock_for_one_final_day">Unlock the app for one final day</string>
     <string name="welcome_to_app_name">Welcome to %s!</string>
-    <string name="trial_start_description">Thank you for using our app. You can use this unlocked version for &lt;font color=\'#FFFFFF\'>%d days&lt;/font>. Once the trial ends, please consider upgrading to the Pro version. It has a huge amount of new features, modern design, no ads and many other improvements.
+    <string name="trial_start_description">Thank you for using our app. You can use this unlocked version for &lt;font color=\'#FFFFFF\'&gt;%d days&lt;/font&gt;. Once the trial ends, please consider upgrading to the Pro version. It has a huge amount of new features, modern design, no ads and many other improvements.
         \n\nYou just have to pay for it once in a lifetime and if you won\'t be satisfied, you can uninstall it and get a refund.\n\nHope you\'ll like it :)</string>
     <string name="trial_end_description">Please upgrade to the Pro version to enjoy the app to the fullest.\n\nYou just have to pay for it once in a lifetime and if you won\'t be satisfied, you can uninstall it and get a refund.\n\nSee you there :)</string>
     <plurals name="trial_expires_days">

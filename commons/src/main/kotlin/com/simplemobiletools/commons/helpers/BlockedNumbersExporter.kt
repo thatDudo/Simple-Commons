@@ -2,12 +2,8 @@ package com.simplemobiletools.commons.helpers
 
 import com.simplemobiletools.commons.models.BlockedNumber
 import java.io.OutputStream
-import java.util.ArrayList
 
-class BlockedNumbersExporter {
-    enum class ExportResult {
-        EXPORT_FAIL, EXPORT_OK
-    }
+object BlockedNumbersExporter {
 
     fun exportBlockedNumbers(
         blockedNumbers: ArrayList<BlockedNumber>,

@@ -77,6 +77,7 @@
     <string name="phone_storage">Pamięć telefonu</string>
     <string name="phone_storage_hidden">Pamięć telefonu (niewidoczne dla innych aplikacji)</string>
     <string name="audio">Audio</string>
+    <string name="scanning">Skanowanie…</string>
     <!-- Events -->
     <string name="birthday">Urodziny</string>
     <string name="anniversary">Rocznica</string>
@@ -99,6 +100,7 @@
     <string name="increase_column_count">Zwiększ liczbę kolumn</string>
     <string name="reduce_column_count">Zmniejsz liczbę kolumn</string>
     <string name="column_count">Liczba kolumn</string>
+    <string name="row_count">Liczba wierszy</string>
     <string name="portrait_column_count">Liczba kolumn w trybie pionowym</string>
     <string name="landscape_column_count">Liczba kolumn w trybie poziomym</string>
     <string name="change_cover_image">Zmień okładkę</string>
@@ -108,6 +110,12 @@
         <item quantity="few">%d kolumny</item>
         <item quantity="many">%d kolumn</item>
         <item quantity="other">%d kolumn</item>
+    </plurals>
+    <plurals name="row_counts">
+        <item quantity="one">%d wiersz</item>
+        <item quantity="few">%d wiersze</item>
+        <item quantity="many">%d wierszy</item>
+        <item quantity="other">%d wierszy</item>
     </plurals>
     <!-- Blocked numbers -->
     <string name="manage_blocked_numbers">Zarządzaj zablokowanymi numerami</string>
@@ -127,6 +135,12 @@
     <string name="block_hidden_messages">Blokuj wiadomości od ukrytych numerów</string>
     <string name="add_blocked_number_helper_text">Wprowadź numer lub wzorzec (np. *12345*, +48*8888), aby blokować wszystkie połączenia i wiadomości z numerów pasujących do wzorca</string>
     <string name="must_make_default_caller_id_app">Nie można blokować nieznanych numerów bez uprawnienia do identyfikacji rozmówcy</string>
+    <string name="block_contact">Zablokuj kontakt</string>
+    <string name="block_contact_success">Kontakt został zablokowany</string>
+    <string name="block_contact_fail">Nie udało się zablokować kontaktu</string>
+    <string name="unblock_contact">Odblokuj kontakt</string>
+    <string name="unblock_contact_success">Kontakt został odblokowany</string>
+    <string name="unblock_contact_fail">Nie udało się odblokować kontaktu</string>
     <!-- Favorites -->
     <string name="favorites">Ulubione</string>
     <string name="add_favorites">Dodaj ulubione</string>
@@ -136,6 +150,7 @@
     <string name="search">Szukaj</string>
     <string name="search_in_placeholder">Szukaj w %s</string>
     <string name="type_2_characters">Wpisz co najmniej 2 znaki, aby rozpocząć wyszukiwanie.</string>
+    <string name="show_search">Pokazuj pasek wyszukiwania</string>
     <string name="search_contacts">Szukaj kontaktów</string>
     <string name="search_favorites">Szukaj ulubionych</string>
     <string name="search_apps">Szukaj aplikacji</string>
@@ -165,11 +180,16 @@
     <string name="no_audio_permissions">Wymagane jest uprawnienie „Mikrofon”</string>
     <string name="no_permission">Brak uprawnienia</string>
     <string name="allow_notifications_reminders">Musisz zezwolić aplikacji na wyświetlanie powiadomień, w przeciwnym razie nie będzie mogła wyświetlać przypomnień.</string>
+    <string name="allow_full_screen_notifications_reminders">Musisz zezwolić aplikacji na wyświetlanie powiadomień na pełnym ekranie, w przeciwnym razie możesz przegapić niektóre przypomnienia.</string>
     <string name="allow_notifications_files">Musisz zezwolić aplikacji na wyświetlanie powiadomień, w przeciwnym razie nie będzie mogła wyświetlać paska postępu.</string>
     <string name="allow_notifications_music_player">Musisz zezwolić aplikacji na wyświetlanie powiadomień, w przeciwnym razie nie będzie mogła odtwarzać utworów.</string>
     <string name="allow_notifications_voice_recorder">Musisz zezwolić aplikacji na wyświetlanie powiadomień, w przeciwnym razie nie będzie mogła nagrywać dźwięku.</string>
     <string name="allow_notifications_incoming_calls">Musisz zezwolić aplikacji na wyświetlanie powiadomień, w przeciwnym razie nie będzie mogła wyświetlać połączeń przychodzących.</string>
+    <string name="allow_full_screen_notifications_incoming_calls">Musisz zezwolić aplikacji na wyświetlanie powiadomień na pełnym ekranie, w przeciwnym razie możesz przegapić niektóre połączenia przychodzące.</string>
     <string name="allow_notifications_incoming_messages">Musisz zezwolić aplikacji na wyświetlanie powiadomień, w przeciwnym razie nie będzie mogła wyświetlać wiadomości przychodzących.</string>
+    <string name="allow_alarm_scheduled_messages">Musisz zezwolić aplikacji na dostęp do alarmów, w przeciwnym razie nie będzie mogła wysyłać zaplanowanych wiadomości.</string>
+    <string name="allow_alarm_sleep_timer">Musisz zezwolić aplikacji na dostęp do alarmów, w przeciwnym razie nie będzie mogła się wyłączyć po upływie czasu uśpienia.</string>
+    <string name="allow_location_permission">Musisz zezwolić aplikacji na dostęp do Twojej lokalizacji, w przeciwnym razie nie będzie jej znać.</string>
     <string name="grant_permission">Nadaj uprawnienie</string>
     <string name="permission_required">Wymagane uprawnienie</string>
     <!-- Renaming -->
@@ -294,6 +314,7 @@
     <string name="select_storage">Wybierz pamięć</string>
     <string name="storage">Pamięć</string>
     <string name="internal">Wewnętrzna</string>
+    <string name="internal_storage">Pamięć wewnętrzna</string>
     <string name="sd_card">Karta pamięci</string>
     <string name="root">Folder główny</string>
     <string name="wrong_root_selected">Wybrano nieprawidłowy folder. Wybierz folder główny karty pamięci.</string>
@@ -380,6 +401,7 @@
     <string name="unhide_folder">Odkryj folder</string>
     <string name="temporarily_show_hidden">Tymczasowo pokaż ukryte elementy</string>
     <string name="stop_showing_hidden">Przestań pokazywać ukryte elementy</string>
+    <string name="allow_access_more_media">Zezwól na dostęp do większej liczby multimediów</string>
     <string name="maximum_share_reached">Nie możesz udostępniać tak wielu danych naraz</string>
     <string name="empty_and_disable_recycle_bin">Opróżnij i wyłącz kosz</string>
     <string name="undo">Cofnij</string>
@@ -404,6 +426,10 @@
     <string name="contact_details">Szczegóły kontaktu</string>
     <string name="add_contact">Dodaj kontakt</string>
     <string name="wallpapers">Tapety</string>
+    <string name="show_line_numbers">Pokaż numery linii</string>
+    <string name="hide_line_numbers">Ukryj numery linii</string>
+    <string name="sleep_timer">Wyłącznik czasowy</string>
+    <string name="unblock">Odblokuj</string>
     <!-- Sorting -->
     <string name="sort_by">Sortuj według</string>
     <string name="name">Nazwa</string>
@@ -427,6 +453,7 @@
     <string name="full_name">Pełna nazwa</string>
     <string name="use_custom_sorting">Użyj własnego sortowania</string>
     <string name="change_order">Zmień kolejność</string>
+    <string name="more_options">Więcej opcji</string>
     <!-- Confirmation dialog -->
     <string name="proceed_with_deletion">Czy kontynuować usuwanie\?</string>
     <string name="deletion_confirmation">Czy usunąć %s\?</string>
@@ -452,6 +479,9 @@
     <string name="enter_pin">Wprowadź PIN</string>
     <string name="please_enter_pin">Wprowadź PIN</string>
     <string name="wrong_pin">Nieprawidłowy PIN</string>
+    <string name="pin_must_be_4_digits_long">PIN musi mieć co najmniej 4 cyfry</string>
+    <string name="too_many_incorrect_attempts">Zbyt wiele błędnych prób odblokowania.
+\nSpróbuj ponownie za %d sek.</string>
     <string name="repeat_pin">Wprowadź PIN ponownie</string>
     <string name="pattern">Wzór</string>
     <string name="insert_pattern">Wprowadź wzór</string>
@@ -473,10 +503,12 @@
     <string name="lock_folder_pro">Zablokuj folder (Pro)</string>
     <string name="unlock_folder">Odblokuj folder</string>
     <string name="lock_folder_notice">Ta ochrona działa tylko w tej aplikacji i nie ma zastępować prawdziwego szyfrowania folderów w całym systemie.</string>
-    <string name="enter_password">Enter password</string>
-    <string name="password">Password</string>
-    <string name="empty_password">Please enter the password</string>
-    <string name="invalid_password">Incorrect password</string>
+    <string name="enter_password">Wprowadź hasło</string>
+    <string name="password">Hasło</string>
+    <string name="add_password">Dodaj hasło</string>
+    <string name="empty_password_new">Wprowadź hasło</string>
+    <string name="empty_password">Wprowadź hasło</string>
+    <string name="invalid_password">Nieprawidłowe hasło</string>
     <!-- Times -->
     <string name="yesterday">Wczoraj</string>
     <string name="today">Dzisiaj</string>
@@ -774,7 +806,7 @@
     <string name="show_the_recycle_bin">Pokaż kosz</string>
     <string name="hide_the_recycle_bin">Ukryj kosz</string>
     <string name="open_the_recycle_bin">Otwórz kosz</string>
-    <string name="skip_the_recycle_bin">Pomiń kosz, usuń pliki bezpośrednio</string>
+    <string name="skip_the_recycle_bin">Pomiń kosz, usuń bezpośrednio</string>
     <plurals name="moving_items_into_bin">
         <item quantity="one">Przenoszenie %d elementu do kosza</item>
         <item quantity="few">Przenoszenie %d elementów do kosza</item>
@@ -1175,7 +1207,7 @@
     <string name="pdf_viewer_title">Android PdfViewer (czytnik PDF)</string>
     <string name="m3u_parser_title">M3U Parser (obsługa plików playlist M3U)</string>
     <string name="android_lame_title">AndroidLame (koder MP3)</string>
-    <string name="zip4j_title">Zip4j (ZIP compression and decompression)</string>
+    <string name="zip4j_title">Zip4j (kompresja i dekompresja ZIP)</string>
     <!-- Trial -->
     <string name="trial_expired">Okres próbny wygasł</string>
     <string name="start_free_trial">Rozpocznij darmowy okres próbny</string>

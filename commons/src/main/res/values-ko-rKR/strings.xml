@@ -77,6 +77,7 @@
     <string name="phone_storage">Phone storage</string>
     <string name="phone_storage_hidden">Phone storage (not visible by other apps)</string>
     <string name="audio">Audio</string>
+    <string name="scanning">Scanning…</string>
     <!-- Events -->
     <string name="birthday">생일</string>
     <string name="anniversary">기념일</string>
@@ -99,6 +100,7 @@
     <string name="increase_column_count">섬네일크기 축소</string>
     <string name="reduce_column_count">섬네일크기 확대</string>
     <string name="column_count">Column count</string>
+    <string name="row_count">Row count</string>
     <string name="portrait_column_count">Portrait column count</string>
     <string name="landscape_column_count">Landscape column count</string>
     <string name="change_cover_image">커버 사진 변경</string>
@@ -106,6 +108,10 @@
     <plurals name="column_counts">
         <item quantity="one">%d column</item>
         <item quantity="other">%d columns</item>
+    </plurals>
+    <plurals name="row_counts">
+        <item quantity="one">%d row</item>
+        <item quantity="other">%d rows</item>
     </plurals>
     <!-- Blocked numbers -->
     <string name="manage_blocked_numbers">Manage blocked numbers</string>
@@ -125,6 +131,12 @@
     <string name="block_hidden_messages">Block messages from hidden numbers</string>
     <string name="add_blocked_number_helper_text">Enter a number or a pattern (e.g. *12345*, +1*8888) to block all calls and messages from numbers matching the pattern.</string>
     <string name="must_make_default_caller_id_app">Can\'t block unknown numbers without caller ID permission.</string>
+    <string name="block_contact">Block contact</string>
+    <string name="block_contact_success">Contact blocked</string>
+    <string name="block_contact_fail">Contact could not be blocked</string>
+    <string name="unblock_contact">Unblock contact</string>
+    <string name="unblock_contact_success">Contact unblocked</string>
+    <string name="unblock_contact_fail">Contact could not be unblocked</string>
     <!-- Favorites -->
     <string name="favorites">즐겨찾기</string>
     <string name="add_favorites">즐겨찾기 추가</string>
@@ -134,6 +146,7 @@
     <string name="search">검색</string>
     <string name="search_in_placeholder">Search in %s</string>
     <string name="type_2_characters">최소 두 글자를 입력해 주세요</string>
+    <string name="show_search">Show a search bar</string>
     <string name="search_contacts">Search contacts</string>
     <string name="search_favorites">Search favorites</string>
     <string name="search_apps">Search apps</string>
@@ -163,11 +176,16 @@
     <string name="no_audio_permissions">오디오 사용 권한이 필요함</string>
     <string name="no_permission">No permission</string>
     <string name="allow_notifications_reminders">You must allow the app displaying notifications, else it cannot show reminders.</string>
+    <string name="allow_full_screen_notifications_reminders">You must allow the app displaying full screen notifications, else you may miss some reminders.</string>
     <string name="allow_notifications_files">You must allow the app displaying notifications, else it cannot show the progress bar.</string>
     <string name="allow_notifications_music_player">You must allow the app displaying notifications, else it cannot play songs.</string>
     <string name="allow_notifications_voice_recorder">You must allow the app displaying notifications, else it cannot record audio.</string>
     <string name="allow_notifications_incoming_calls">You must allow the app displaying notifications, else it cannot show incoming calls.</string>
+    <string name="allow_full_screen_notifications_incoming_calls">You must allow the app displaying full screen notifications, else you may miss some incoming calls.</string>
     <string name="allow_notifications_incoming_messages">You must allow the app displaying notifications, else it cannot show incoming messages.</string>
+    <string name="allow_alarm_scheduled_messages">You must allow the app accessing internal alarms, else it cannot send scheduled messages.</string>
+    <string name="allow_alarm_sleep_timer">You must allow the app accessing internal alarms, else it cannot turn off the application after sleep timer.</string>
+    <string name="allow_location_permission">You must allow the app accessing your location, else it won\'t know it.</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="permission_required">Permission Required</string>
     <!-- Renaming -->
@@ -281,6 +299,7 @@
     <string name="select_storage">저장공간 선택</string>
     <string name="storage">Storage</string>
     <string name="internal">내장 메모리</string>
+    <string name="internal_storage">Internal Storage</string>
     <string name="sd_card">외장 메모리</string>
     <string name="root">루트</string>
     <string name="wrong_root_selected">잘못된 폴더가 선택되었습니다. SD 카드의 루트 폴더를 선택하세요.</string>
@@ -370,6 +389,7 @@
     <string name="unhide_folder">폴더숨김 해제</string>
     <string name="temporarily_show_hidden">숨김파일 임시보기</string>
     <string name="stop_showing_hidden">숨김파일 임시보기 해제</string>
+    <string name="allow_access_more_media">Allow access to more media</string>
     <string name="maximum_share_reached">한 번에 공유 할 수 있는 항목 수를 초과하였습니다.</string>
     <string name="empty_and_disable_recycle_bin">휴지통을 비우고 비활성화하기</string>
     <string name="undo">뒤로</string>
@@ -394,6 +414,10 @@
     <string name="contact_details">Contact details</string>
     <string name="add_contact">Add contact</string>
     <string name="wallpapers">Wallpapers</string>
+    <string name="show_line_numbers">Show line numbers</string>
+    <string name="hide_line_numbers">Hide line numbers</string>
+    <string name="sleep_timer">취침 타이머</string>
+    <string name="unblock">Unblock</string>
     <!-- Sorting -->
     <string name="sort_by">정렬 방식</string>
     <string name="name">이름</string>
@@ -417,6 +441,7 @@
     <string name="full_name">Full name</string>
     <string name="use_custom_sorting">Use custom sorting</string>
     <string name="change_order">Change order</string>
+    <string name="more_options">More options</string>
     <!-- Confirmation dialog -->
     <string name="proceed_with_deletion">정말로 삭제 하시겠습니까?</string>
     <string name="deletion_confirmation">%s을 정말 삭제 하시겠습니까?</string>
@@ -439,6 +464,8 @@
     <string name="enter_pin">PIN 번호 입력</string>
     <string name="please_enter_pin">PIN 번호를 입력하세요.</string>
     <string name="wrong_pin">PIN 번호가 일치하지 않습니다.</string>
+    <string name="pin_must_be_4_digits_long">PIN must be at least 4 digits long</string>
+    <string name="too_many_incorrect_attempts">Too many incorrect unlock attempts.\nTry again in %d seconds.</string>
     <string name="repeat_pin">PIN 번호 확인</string>
     <string name="pattern">패턴</string>
     <string name="insert_pattern">패턴 입력</string>
@@ -462,6 +489,8 @@
     <string name="lock_folder_notice">이 보안 설정은 이 앱에서만 작동하며, 실제 시스템 폴더 암호화를 대체할 수 없습니다.</string>
     <string name="enter_password">Enter password</string>
     <string name="password">Password</string>
+    <string name="add_password">Add password</string>
+    <string name="empty_password_new">Please enter a password</string>
     <string name="empty_password">Please enter the password</string>
     <string name="invalid_password">Incorrect password</string>
     <!-- Times -->

@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplemobiletools.commons.views.PinTab
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.simplemobiletools.commons.views.PinTab xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pin_lock_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/pin_lock_icon"
+        android:layout_width="@dimen/medium_icon_size"
+        android:layout_height="@dimen/medium_icon_size"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:src="@drawable/ic_lock_outlined_vector" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/pin_lock_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/small_margin"
+        android:layout_below="@id/pin_lock_icon"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:minLines="2"
         android:paddingLeft="@dimen/activity_margin"
-        android:paddingRight="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin"
-        android:text="@string/enter_pin"/>
+        android:paddingRight="@dimen/activity_margin"
+        android:paddingBottom="@dimen/small_margin"
+        android:text="@string/enter_pin"
+        android:textAlignment="center"
+        android:textSize="@dimen/bigger_text_size" />
 
     <com.simplemobiletools.commons.views.MyTextView
         android:id="@+id/pin_lock_current_pin"
@@ -24,9 +38,10 @@
         android:letterSpacing="1.05"
         android:lines="1"
         android:maxLength="10"
-        android:paddingBottom="@dimen/small_margin"
         android:paddingTop="@dimen/small_margin"
-        android:textSize="@dimen/big_text_size"/>
+        android:paddingBottom="@dimen/small_margin"
+        android:textSize="@dimen/big_text_size"
+        tools:text="****" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="1"/>
+                android:text="1" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/pin_2"
@@ -55,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="2"/>
+                android:text="2" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/pin_3"
@@ -63,7 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="3"/>
+                android:text="3" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="4"/>
+                android:text="4" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/pin_5"
@@ -86,7 +101,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="5"/>
+                android:text="5" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/pin_6"
@@ -94,7 +109,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="6"/>
+                android:text="6" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,7 +124,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="7"/>
+                android:text="7" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/pin_8"
@@ -117,7 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="8"/>
+                android:text="8" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/pin_9"
@@ -125,7 +140,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="9"/>
+                android:text="9" />
         </LinearLayout>
 
         <LinearLayout
@@ -140,7 +155,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="C"/>
+                android:text="C" />
 
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/pin_0"
@@ -148,7 +163,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="0"/>
+                android:text="0" />
 
             <ImageView
                 android:id="@+id/pin_ok"
@@ -157,7 +172,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="@dimen/activity_margin"
-                android:src="@drawable/ic_check_vector"/>
+                android:src="@drawable/ic_check_vector" />
 
         </LinearLayout>
     </LinearLayout>

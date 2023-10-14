@@ -1,13 +1,21 @@
 package com.simplemobiletools.commons.helpers
 
 import android.content.Context
+import android.content.res.Configuration
+import android.os.Environment
 import android.text.format.DateFormat
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.extensions.getInternalStoragePath
 import com.simplemobiletools.commons.extensions.getSDCardPath
 import com.simplemobiletools.commons.extensions.getSharedPrefs
+import com.simplemobiletools.commons.extensions.sharedPreferencesCallback
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.LinkedList
+import java.util.Locale
+import kotlin.reflect.KProperty0
 
 open class BaseConfig(val context: Context) {
     protected val prefs = context.getSharedPrefs()
@@ -210,9 +218,13 @@ open class BaseConfig(val context: Context) {
             prefs.edit().putBoolean(USE_ENGLISH, useEnglish).commit()
         }
 
+    val useEnglishFlow = ::useEnglish.asFlowNonNull()
+
     var wasUseEnglishToggled: Boolean
         get() = prefs.getBoolean(WAS_USE_ENGLISH_TOGGLED, false)
         set(wasUseEnglishToggled) = prefs.edit().putBoolean(WAS_USE_ENGLISH_TOGGLED, wasUseEnglishToggled).apply()
+
+    val wasUseEnglishToggledFlow = ::wasUseEnglishToggled.asFlowNonNull()
 
     var wasSharedThemeEverActivated: Boolean
         get() = prefs.getBoolean(WAS_SHARED_THEME_EVER_ACTIVATED, false)
@@ -444,9 +456,13 @@ open class BaseConfig(val context: Context) {
         get() = prefs.getBoolean(BLOCK_UNKNOWN_NUMBERS, false)
         set(blockUnknownNumbers) = prefs.edit().putBoolean(BLOCK_UNKNOWN_NUMBERS, blockUnknownNumbers).apply()
 
+    val isBlockingUnknownNumbers: Flow<Boolean> = ::blockUnknownNumbers.asFlowNonNull()
+
     var blockHiddenNumbers: Boolean
         get() = prefs.getBoolean(BLOCK_HIDDEN_NUMBERS, false)
         set(blockHiddenNumbers) = prefs.edit().putBoolean(BLOCK_HIDDEN_NUMBERS, blockHiddenNumbers).apply()
+
+    val isBlockingHiddenNumbers: Flow<Boolean> = ::blockHiddenNumbers.asFlowNonNull()
 
     var fontSize: Int
         get() = prefs.getInt(FONT_SIZE, context.resources.getInteger(R.integer.default_font_size))
@@ -486,6 +502,8 @@ open class BaseConfig(val context: Context) {
             return LinkedList(prefs.getString(COLOR_PICKER_RECENT_COLORS, null)?.lines()?.map { it.toInt() } ?: defaultList)
         }
         set(recentColors) = prefs.edit().putString(COLOR_PICKER_RECENT_COLORS, recentColors.joinToString(separator = "\n")).apply()
+
+    val colorPickerRecentColorsFlow = ::colorPickerRecentColors.asFlowNonNull()
 
     var ignoredContactSources: HashSet<String>
         get() = prefs.getStringSet(IGNORED_CONTACT_SOURCES, hashSetOf(".")) as HashSet
@@ -549,4 +567,49 @@ open class BaseConfig(val context: Context) {
     var isCustomOrderSelected: Boolean
         get() = prefs.getBoolean(FAVORITES_CUSTOM_ORDER_SELECTED, false)
         set(selected) = prefs.edit().putBoolean(FAVORITES_CUSTOM_ORDER_SELECTED, selected).apply()
+
+    var viewType: Int
+        get() = prefs.getInt(VIEW_TYPE, VIEW_TYPE_LIST)
+        set(viewType) = prefs.edit().putInt(VIEW_TYPE, viewType).apply()
+
+    var contactsGridColumnCount: Int
+        get() = prefs.getInt(CONTACTS_GRID_COLUMN_COUNT, getDefaultContactColumnsCount())
+        set(contactsGridColumnCount) = prefs.edit().putInt(CONTACTS_GRID_COLUMN_COUNT, contactsGridColumnCount).apply()
+
+    private fun getDefaultContactColumnsCount(): Int {
+        val isPortrait = context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        return if (isPortrait) {
+            context.resources.getInteger(R.integer.contacts_grid_columns_count_portrait)
+        } else {
+            context.resources.getInteger(R.integer.contacts_grid_columns_count_landscape)
+        }
+    }
+
+    var autoBackup: Boolean
+        get() = prefs.getBoolean(AUTO_BACKUP, false)
+        set(autoBackup) = prefs.edit().putBoolean(AUTO_BACKUP, autoBackup).apply()
+
+    var autoBackupFolder: String
+        get() = prefs.getString(AUTO_BACKUP_FOLDER, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath)!!
+        set(autoBackupFolder) = prefs.edit().putString(AUTO_BACKUP_FOLDER, autoBackupFolder).apply()
+
+    var autoBackupFilename: String
+        get() = prefs.getString(AUTO_BACKUP_FILENAME, "")!!
+        set(autoBackupFilename) = prefs.edit().putString(AUTO_BACKUP_FILENAME, autoBackupFilename).apply()
+
+    var lastAutoBackupTime: Long
+        get() = prefs.getLong(LAST_AUTO_BACKUP_TIME, 0L)
+        set(lastAutoBackupTime) = prefs.edit().putLong(LAST_AUTO_BACKUP_TIME, lastAutoBackupTime).apply()
+
+    var passwordRetryCount: Int
+        get() = prefs.getInt(PASSWORD_RETRY_COUNT, 0)
+        set(passwordRetryCount) = prefs.edit().putInt(PASSWORD_RETRY_COUNT, passwordRetryCount).apply()
+
+    var passwordCountdownStartMs: Long
+        get() = prefs.getLong(PASSWORD_COUNTDOWN_START_MS, 0L)
+        set(passwordCountdownStartMs) = prefs.edit().putLong(PASSWORD_COUNTDOWN_START_MS, passwordCountdownStartMs).apply()
+
+    protected fun <T> KProperty0<T>.asFlow(): Flow<T?> = prefs.run { sharedPreferencesCallback { this@asFlow.get() } }
+
+    protected fun <T> KProperty0<T>.asFlowNonNull(): Flow<T> = asFlow().filterNotNull()
 }
